@@ -23,11 +23,6 @@ export class ChatService {
           (message) =>
             message.code === TransportCode.MESSAGE_RECEIVED ||
             message.code === TransportCode.MESSAGE_SENT
-        ),
-        filter(
-          (message) =>
-            message.initiator?.character.id !==
-            this.characterService.character.id
         )
       )
       .subscribe((message: TransportMessage<{ message: string }>) => {
