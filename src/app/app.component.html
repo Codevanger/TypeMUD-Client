@@ -26,6 +26,19 @@
         icon="pi pi-info-circle"
         [label]="this.displayExits ? 'Скрыть переходы' : 'Показать переходы'"
       ></button>
+
+      <p-divider layout="vertical"></p-divider>
+
+      <h2>
+        {{ (currentLocation$ | async)?.name }}
+      </h2>
+
+      <p-divider layout="vertical"></p-divider>
+
+      <h2>
+        {{ currentCharacter?.name }}
+      </h2>
+      
     </div>
     <div class="main-screen">
       <span class="location-description">

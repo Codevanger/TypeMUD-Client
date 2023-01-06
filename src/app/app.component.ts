@@ -64,6 +64,10 @@ export class AppComponent implements OnInit {
     );
   }
 
+  public get currentCharacter(): Character {
+    return this.characterService.character;
+  }
+
   public get displayLogin(): boolean {
     return !this.authService.loggedIn;
   }

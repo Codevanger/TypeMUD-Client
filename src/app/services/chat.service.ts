@@ -31,11 +31,10 @@ export class ChatService {
       });
 
     this.wsService.parsedConnection$
-      .pipe(
-        filter((data) => data.code === TransportCode.CHANGED),
-        filter((data) => !!data.initiator && !!data.initiator.character)
-      )
+      .pipe(filter((data) => data.code === TransportCode.CHANGED))
       .subscribe((data: TransportMessage<GameLocation>) => {
+        console.log(data);
+
         if (data.message === 'Other character leave from here') {
           this.addMessage(`${data.initiator.character.name} ушёл отсюда.`);
         }

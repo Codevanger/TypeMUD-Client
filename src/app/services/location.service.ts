@@ -3,7 +3,6 @@ import { BehaviorSubject, filter } from 'rxjs';
 import { GameLocation } from '../types/locations';
 import { TransportCode } from '../types/transport-code';
 import { TransportMessage } from '../types/transport-message';
-import { ChatService } from './chat.service';
 import { WebsocketService } from './websocket.service';
 
 @Injectable()
@@ -26,7 +25,7 @@ export class LocationService {
 
     this.wsService.parsedConnection$
       .pipe(filter((data) => data.code === TransportCode.CHANGED))
-      .subscribe((data: TransportMessage<GameLocation>) => {
+      .subscribe(() => {
         this.getCurrentLocation();
       });
   }
