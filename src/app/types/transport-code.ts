@@ -1,0 +1,25 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+export enum TransportCode {
+  // General
+  OK = 0,
+  ERROR,
+  CONNECTED,
+  DISCONNECTED,
+  NOT_IMPLEMENTED,
+  COMMAND_NOT_FOUND,
+  NOT_FOUND,
+  // AUTH
+  AUTHENTICATED = 1000,
+  AUTH_REQUIRED,
+  // MAP
+  MOVED = 2000,
+  CHANGED,
+  MAP_INFO,
+  // CHARACTER
+  SELECTED_CHARACTER = 3000,
+  CHARACTER_REQUIRED,
+  CHARACTER_INFO,
+  // CHAT
+  MESSAGE_SENT,
+  MESSAGE_RECEIVED,
+}

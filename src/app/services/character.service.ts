@@ -1,0 +1,82 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { filter, Observable, tap } from 'rxjs';
+import { Character } from '../types/character';
+import { TransportCode } from '../types/transport-code';
+import { TransportMessage } from '../types/transport-message';
+import { AuthService } from './auth.service';
+import { LocationService } from './location.service';
+import { WebsocketService } from './websocket.service';
+
+@Injectable()
+export class CharacterService {
+  public character: Character;
+
+  constructor(
+    private wsService: WebsocketService,
+    private authService: AuthService,
+    private locationService: LocationService,
+    private http: HttpClient
+  ) {
+    this.wsService.parsedConnection$
+      .pipe(
+        filter(
+          (message) =>
+            message.code === TransportCode.SELECTED_CHARACTER ||
+            message.code === TransportCode.CHARACTER_INFO
+        )
+      )
+      .subscribe((parsed: TransportMessage<Character>) => {
+        this.character = parsed.data;
+        this.locationService.getCurrentLocation();
+      });
+  }
+
+  public selectCharacter(characterId: number): void {
+    if (!this.wsService.connected) {
+      return null;
+    }
+
+    if (!this.authService.loggedIn) {
+      return null;
+    }
+
+    this.wsService.sendMessage('/select ' + characterId);
+  }
+
+  public getCurrentCharacter(): void {
+    if (!this.wsService.connected) {
+      return null;
+    }
+
+    if (!this.authService.loggedIn) {
+      return null;
+    }
+
+    this.wsService.sendMessage('/me');
+  }
+
+  public getAllCharacters(): Observable<Character[]> {
+    if (!this.authService.loggedIn) {
+      return null;
+    }
+
+    return this.http.get<Character[]>('/api/character/user/current');
+  }
+
+  public createCharacter(name: string): Observable<Character> {
+    if (!this.authService.loggedIn) {
+      return null;
+    }
+
+    return this.http.post<Character>('/api/character/user/current', { name });
+  }
+
+  public getCharacter(id: number): Observable<Character> {
+    if (!this.authService.loggedIn) {
+      return null;
+    }
+
+    return this.http.get<Character>(`/api/character/${id}`);
+  }
+}
