@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { filter, Observable, tap } from 'rxjs';
+import { APP_CONFIG } from '../../environments/environment';
 import { Character } from '../types/character';
 import { TransportCode } from '../types/transport-code';
 import { TransportMessage } from '../types/transport-message';
@@ -57,26 +58,46 @@ export class CharacterService {
   }
 
   public getAllCharacters(): Observable<Character[]> {
+    const apiAdress =
+      APP_CONFIG.address && APP_CONFIG.address !== ''
+        ? `http://${APP_CONFIG.address}`
+        : 'localhost';
+
     if (!this.authService.loggedIn) {
       return null;
     }
 
-    return this.http.get<Character[]>('/api/character/user/current');
+    return this.http.get<Character[]>(
+      apiAdress + '/api/character/user/current'
+    );
   }
 
   public createCharacter(name: string): Observable<Character> {
+    const apiAdress =
+      APP_CONFIG.address && APP_CONFIG.address !== ''
+        ? `http://${APP_CONFIG.address}`
+        : 'localhost';
+
     if (!this.authService.loggedIn) {
       return null;
     }
 
-    return this.http.post<Character>('/api/character/user/current', { name });
+    return this.http.post<Character>(
+      apiAdress + '/api/character/user/current',
+      { name }
+    );
   }
 
   public getCharacter(id: number): Observable<Character> {
+    const apiAdress =
+      APP_CONFIG.address && APP_CONFIG.address !== ''
+        ? `http://${APP_CONFIG.address}`
+        : 'localhost';
+
     if (!this.authService.loggedIn) {
       return null;
     }
 
-    return this.http.get<Character>(`/api/character/${id}`);
+    return this.http.get<Character>(apiAdress + `/api/character/${id}`);
   }
 }

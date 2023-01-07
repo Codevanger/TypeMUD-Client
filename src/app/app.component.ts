@@ -55,7 +55,12 @@ export class AppComponent implements OnInit {
   ) {
     console.log('APP_CONFIG', APP_CONFIG);
 
-    this.wsService.connect('ws://localhost:5050');
+    const serverAddress =
+      APP_CONFIG.address && APP_CONFIG.address !== ''
+        ? `ws://${APP_CONFIG.address}:${APP_CONFIG.port}`
+        : `ws://localhost:${APP_CONFIG.port}`;
+
+    this.wsService.connect(serverAddress);
   }
 
   public get currentLocation$(): Observable<GameLocation> {
