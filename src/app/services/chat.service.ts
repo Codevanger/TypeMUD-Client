@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, filter } from 'rxjs';
+import { Character } from '../types/character';
 import { GameLocation } from '../types/locations';
 import { TransportCode } from '../types/transport-code';
 import { TransportMessage } from '../types/transport-message';
@@ -25,24 +26,62 @@ export class ChatService {
             message.code === TransportCode.MESSAGE_SENT
         )
       )
-      .subscribe((message: TransportMessage<{ message: string }>) => {
-        this.chatLog$.next([...this.chatLog$.value, message.data.message]);
-        this.lastMessage$.next(message.data.message);
-      });
+      .subscribe(
+        (
+          message: TransportMessage<{ message: string; type: 'say' | 'shout' }>
+        ) => {
+          let action = '';
+
+          if (
+            message.initiator.character.id ===
+            this.characterService.character.id
+          ) {
+            action = message.data.type === 'say' ? 'говорите' : 'кричите';
+          } else {
+            action = message.data.type === 'say' ? 'говорит' : 'кричит';
+          }
+
+          const sender =
+            message.initiator.character.id ===
+            this.characterService.character.id
+              ? 'Вы'
+              : message.initiator.character.name;
+
+          const readyMessage = `${sender} ${action}: ${message.data.message}`;
+
+          this.chatLog$.next([...this.chatLog$.value, readyMessage]);
+          this.lastMessage$.next(readyMessage);
+        }
+      );
 
     this.wsService.parsedConnection$
-      .pipe(filter((data) => data.code === TransportCode.CHANGED))
-      .subscribe((data: TransportMessage<GameLocation>) => {
-        console.log(data);
+      .pipe(
+        filter(
+          (parsed) =>
+            parsed.code === TransportCode.CHARACTER_LEAVED ||
+            parsed.code === TransportCode.CHARACTER_ENTERED
+        )
+      )
+      .subscribe(
+        (
+          parsed: TransportMessage<{
+            location: GameLocation;
+            character: Character;
+          }>
+        ) => {
+          if (parsed.code === TransportCode.CHARACTER_LEAVED) {
+            this.addMessage(
+              `${parsed.initiator.character.name} ушёл отсюда в ${parsed.data.location.name}.`
+            );
+          }
 
-        if (data.message === 'Other character leave from here') {
-          this.addMessage(`${data.initiator.character.name} ушёл отсюда.`);
+          if (parsed.code === TransportCode.CHARACTER_ENTERED) {
+            this.addMessage(
+              `${parsed.initiator.character.name} пришёл сюда из ${parsed.data.location.name}.`
+            );
+          }
         }
-
-        if (data.message === 'Other character come here') {
-          this.addMessage(`${data.initiator.character.name} пришёл сюда.`);
-        }
-      });
+      );
   }
 
   public get chatLog(): string[] {

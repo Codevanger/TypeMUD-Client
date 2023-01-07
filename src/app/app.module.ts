@@ -17,7 +17,6 @@ import { AppComponent } from './app.component';
 import { AuthService } from './services/auth.service';
 import { WebsocketService } from './services/websocket.service';
 import { CharacterService } from './services/character.service';
-import { MapService } from './services/map.service';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { ChatService } from './services/chat.service';
 import { LocationService } from './services/location.service';
@@ -43,7 +42,6 @@ import { LocationService } from './services/location.service';
     WebsocketService,
     AuthService,
     CharacterService,
-    MapService,
     ChatService,
     LocationService,
     {

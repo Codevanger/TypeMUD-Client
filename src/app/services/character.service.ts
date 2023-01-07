@@ -27,8 +27,8 @@ export class CharacterService {
             message.code === TransportCode.CHARACTER_INFO
         )
       )
-      .subscribe((parsed: TransportMessage<Character>) => {
-        this.character = parsed.data;
+      .subscribe((parsed: TransportMessage<{ character: Character }>) => {
+        this.character = parsed.data.character;
         this.locationService.getCurrentLocation();
       });
   }
@@ -54,7 +54,7 @@ export class CharacterService {
       return null;
     }
 
-    this.wsService.sendMessage('/me');
+    this.wsService.sendMessage('/mycharacter');
   }
 
   public getAllCharacters(): Observable<Character[]> {

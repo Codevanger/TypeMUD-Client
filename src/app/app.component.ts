@@ -89,6 +89,15 @@ export class AppComponent implements OnInit {
           });
         }
       });
+
+    this.wsService.connected$.subscribe((x) => {
+      this.authService
+        .login('CodeVanger', 'run2qrxm')
+        .pipe(first())
+        .subscribe(() => {
+          this.characterService.selectCharacter(7);
+        });
+    });
   }
 
   public get currentLocation$(): Observable<GameLocation> {

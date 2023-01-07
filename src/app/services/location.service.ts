@@ -19,8 +19,8 @@ export class LocationService {
             message.code === TransportCode.MAP_INFO
         )
       )
-      .subscribe((message: TransportMessage<GameLocation>) => {
-        this.currentLocation$.next(message.data);
+      .subscribe((parsed: TransportMessage<{ location: GameLocation }>) => {
+        this.currentLocation$.next(parsed.data.location);
       });
 
     this.wsService.parsedConnection$
