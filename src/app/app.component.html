@@ -38,7 +38,6 @@
       <h2>
         {{ currentCharacter?.name }}
       </h2>
-      
     </div>
     <div class="main-screen">
       <span class="location-description">
@@ -60,13 +59,18 @@
   <div class="chat-input">
     <p-dropdown [options]="talkOptions" #type></p-dropdown>
     <div class="p-inputgroup">
-      <input type="text" pInputText #message />
+      <input
+        type="text"
+        pInputText
+        #messageInput
+        (keyup.enter)="sendMessage(type.value, messageInput)"
+      />
       <button
         pButton
         type="button"
         icon="pi pi-send"
         class="p-button-success"
-        (click)="sendMessage(type.value, message.value, chatScreen)"
+        (click)="sendMessage(type.value, messageInput)"
       >
         Отправить
       </button>
@@ -74,13 +78,18 @@
   </div>
 </p-dialog>
 
-<p-dialog header="Переходы" [(visible)]="displayExits" [closable]="false" appendTo="body">
+<p-dialog
+  header="Переходы"
+  [(visible)]="displayExits"
+  [closable]="false"
+  appendTo="body"
+>
   <div>
     <ng-container>
-      <span
-        *ngFor="let exit of (currentLocation$ | async)?.expandedExits"
-      >
-        <button (click)="moveToLocation(exit.id)" pButton style="margin: 5px">{{ exit.name }}</button>
+      <span *ngFor="let exit of (currentLocation$ | async)?.expandedExits">
+        <button (click)="moveToLocation(exit.id)" pButton style="margin: 5px">
+          {{ exit.name }}
+        </button>
         <br />
       </span>
     </ng-container>

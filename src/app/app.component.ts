@@ -1,11 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { APP_CONFIG } from '../environments/environment';
 import { PrimeNGConfig } from 'primeng/api';
 import { AuthService } from './services/auth.service';
 import { WebsocketService } from './services/websocket.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CharacterService } from './services/character.service';
-import { filter, first, map, Observable, of } from 'rxjs';
+import {
+  debounceTime,
+  filter,
+  first,
+  map,
+  Observable,
+  of,
+  switchMap,
+  timer,
+} from 'rxjs';
 import { Character } from './types/character';
 import { ChatService } from './services/chat.service';
 import { LocationService } from './services/location.service';
@@ -17,6 +26,9 @@ import { GameLocation } from './types/locations';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  @ViewChild('chatScreen', { static: false })
+  public chatScreen: ElementRef<HTMLDivElement>;
+
   public displayChat = false;
   public displayExits = false;
 
@@ -61,6 +73,22 @@ export class AppComponent implements OnInit {
         : `ws://localhost:${APP_CONFIG.port}`;
 
     this.wsService.connect(serverAddress);
+
+    this.chatService.lastMessage$
+      .pipe(switchMap(() => timer(100)))
+      .subscribe(() => {
+        console.log({
+          scrollTop: this.chatScreen?.nativeElement?.scrollTop,
+          scrollHeight: this.chatScreen?.nativeElement?.scrollHeight,
+          chatScreen: this.chatScreen?.nativeElement,
+        });
+
+        if (this.chatScreen) {
+          this.chatScreen.nativeElement.scrollTo({
+            top: this.chatScreen.nativeElement.scrollHeight,
+          });
+        }
+      });
   }
 
   public get currentLocation$(): Observable<GameLocation> {
@@ -141,17 +169,10 @@ export class AppComponent implements OnInit {
     });
   }
 
-  public sendMessage(
-    type: string,
-    message: string,
-    chatScreen: HTMLDivElement
-  ): void {
-    if (type && message && message.length > 0) {
-      this.chatService[type](message);
-
-      this.chatService.lastMessage$
-        .pipe(first())
-        .subscribe(() => chatScreen.scrollTo(0, chatScreen.scrollHeight + 50));
+  public sendMessage(type: string, messageInput: HTMLInputElement): void {
+    if (type && messageInput.value && messageInput.value.length > 0) {
+      this.chatService[type](messageInput.value);
+      messageInput.value = '';
     }
   }
 
