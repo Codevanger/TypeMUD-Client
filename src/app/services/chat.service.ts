@@ -5,8 +5,8 @@ import { GameLocation } from '../types/locations';
 import { TransportCode } from '../types/transport-code';
 import { TransportMessage } from '../types/transport-message';
 import { CharacterService } from './character.service';
-import { LocationService } from './location.service';
 import { WebsocketService } from './websocket.service';
+import * as petrovich from 'petrovich';
 
 @Injectable()
 export class ChatService {
@@ -15,8 +15,7 @@ export class ChatService {
 
   constructor(
     private wsService: WebsocketService,
-    private characterService: CharacterService,
-    private locationService: LocationService
+    private characterService: CharacterService
   ) {
     this.wsService.parsedConnection$
       .pipe(
@@ -71,13 +70,15 @@ export class ChatService {
         ) => {
           if (parsed.code === TransportCode.CHARACTER_LEAVED) {
             this.addMessage(
-              `${parsed.initiator.character.name} ушёл отсюда в ${parsed.data.location.name}.`
+              `${parsed.data.character.name} ушёл отсюда в ${petrovich(parsed.data.location.name,'dative')}.`
             );
           }
 
           if (parsed.code === TransportCode.CHARACTER_ENTERED) {
+            console.log(petrovich);
+
             this.addMessage(
-              `${parsed.initiator.character.name} пришёл сюда из ${parsed.data.location.name}.`
+              `${parsed.data.character.name} пришёл сюда из ${petrovich(parsed.data.location.name, 'dative')}.`
             );
           }
         }

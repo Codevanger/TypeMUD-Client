@@ -19,6 +19,7 @@ import { Character } from './types/character';
 import { ChatService } from './services/chat.service';
 import { LocationService } from './services/location.service';
 import { GameLocation } from './types/locations';
+import { MorphService } from './services/morph.service';
 
 @Component({
   selector: 'app-root',
@@ -90,14 +91,7 @@ export class AppComponent implements OnInit {
         }
       });
 
-    this.wsService.connected$.subscribe((x) => {
-      this.authService
-        .login('CodeVanger', 'run2qrxm')
-        .pipe(first())
-        .subscribe(() => {
-          this.characterService.selectCharacter(7);
-        });
-    });
+      const morph = new MorphService();
   }
 
   public get currentLocation$(): Observable<GameLocation> {
