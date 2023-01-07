@@ -25,7 +25,10 @@ export class AuthService {
       return null;
     }
 
-    const apiAdress = APP_CONFIG.address && APP_CONFIG.address !== '' ? `http://${APP_CONFIG.address}` : 'localhost';
+    const apiAdress =
+      APP_CONFIG.address && APP_CONFIG.address !== ''
+        ? `http://${APP_CONFIG.address}`
+        : '';
 
     const login$ = this.http
       .post<{ token: string }>(apiAdress + '/api/auth/login', {

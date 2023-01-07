@@ -61,7 +61,7 @@ export class CharacterService {
     const apiAdress =
       APP_CONFIG.address && APP_CONFIG.address !== ''
         ? `http://${APP_CONFIG.address}`
-        : 'localhost';
+        : '';
 
     if (!this.authService.loggedIn) {
       return null;
@@ -76,7 +76,7 @@ export class CharacterService {
     const apiAdress =
       APP_CONFIG.address && APP_CONFIG.address !== ''
         ? `http://${APP_CONFIG.address}`
-        : 'localhost';
+        : '';
 
     if (!this.authService.loggedIn) {
       return null;
@@ -92,7 +92,7 @@ export class CharacterService {
     const apiAdress =
       APP_CONFIG.address && APP_CONFIG.address !== ''
         ? `http://${APP_CONFIG.address}`
-        : 'localhost';
+        : '';
 
     if (!this.authService.loggedIn) {
       return null;
