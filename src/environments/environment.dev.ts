@@ -1,6 +1,6 @@
 export const APP_CONFIG = {
   production: false,
-  address: '194.87.234.149',
+  address: '',
   port: 5050,
   environment: 'DEV'
 };
