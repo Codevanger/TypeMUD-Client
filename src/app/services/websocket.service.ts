@@ -49,9 +49,7 @@ export class WebsocketService {
         console.log('error: ', err);
 
         if (err.type === 'close') {
-          this.connection$.complete();
-          this.connection$.closed = true;
-          this.connected$.next(false);
+          this.disconnect();
         }
       },
       complete: () => console.log('complete'),
