@@ -122,7 +122,7 @@ export class MapComponent implements OnInit {
       case 'NE':
         return {
           bottom: '105px',
-          left: '95px',
+          left: '90px',
           transform: 'rotate(-45deg)',
         };
       case 'E':
@@ -134,7 +134,7 @@ export class MapComponent implements OnInit {
       case 'SE':
         return {
           bottom: '-75px',
-          left: '95px',
+          left: '90px',
           transform: 'rotate(45deg)',
         };
       case 'S':
@@ -158,7 +158,7 @@ export class MapComponent implements OnInit {
       case 'NW':
         return {
           bottom: '105px',
-          left: '-95px',
+          left: '-90px',
           transform: 'rotate(225deg)',
         };
       default:
