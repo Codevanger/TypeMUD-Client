@@ -1,0 +1,45 @@
+<p-dialog
+  header="Выбор персонажа"
+  [visible]="displayCharSelect"
+  [closable]="false"
+  [modal]="true"
+  [draggable]="false"
+>
+  <div class="character__container">
+    <div class="character__list">
+      <div class="character__item" *ngFor="let character of characters">
+        <div class="character-info">
+          <span class="character-name">{{ character.name }}</span>
+        </div>
+        <div>
+          <button
+            pButton
+            type="button"
+            icon="pi pi-play"
+            iconPos="right"
+            class="p-button-outlined p-button-rounded"
+            label="Выбрать"
+            (click)="selectCharacter(character.id)"
+          ></button>
+        </div>
+      </div>
+    </div>
+
+    <p-divider></p-divider>
+
+    <div class="character__actions">
+      <input
+        pInputText
+        placeholder="Только кириллица"
+        [formControl]="newCharacterName"
+      />
+      <button
+        pButton
+        type="button"
+        label="Создать нового!"
+        [disabled]="newCharacterName.invalid"
+        (click)="createCharacter()"
+      ></button>
+    </div>
+  </div>
+</p-dialog>

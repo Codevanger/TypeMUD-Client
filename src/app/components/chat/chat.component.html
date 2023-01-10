@@ -1,0 +1,30 @@
+<p-dialog header="Чат" [(visible)]="displayChat" [resizable]="false">
+  <div class="chat-screen" #chatScreen>
+    <ng-container>
+      <span *ngFor="let message of messages">
+        <span class="chat-message">{{ message }}</span>
+        <br />
+      </span>
+    </ng-container>
+  </div>
+  <div class="chat-input">
+    <p-dropdown [options]="talkOptions" #type></p-dropdown>
+    <div class="p-inputgroup">
+      <input
+        type="text"
+        pInputText
+        #messageInput
+        (keyup.enter)="sendMessage(type.value, messageInput)"
+      />
+      <button
+        pButton
+        type="button"
+        icon="pi pi-send"
+        class="p-button-success"
+        (click)="sendMessage(type.value, messageInput)"
+      >
+        Отправить
+      </button>
+    </div>
+  </div>
+</p-dialog>

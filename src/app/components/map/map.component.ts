@@ -1,4 +1,12 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { combineLatest, debounceTime } from 'rxjs';
 import { LocationService } from '../../services/location.service';
 import { StateService } from '../../services/state.service';
@@ -22,6 +30,12 @@ type MinimapPosition = {
 export class MapComponent implements OnInit {
   @ViewChild('map', { static: true })
   public map: ElementRef<HTMLDivElement>;
+
+  @Input()
+  public displayMap = false;
+
+  @Output()
+  public displayMapChange = new EventEmitter<boolean>();
 
   public minimapCache = new Set<number>();
   public minimapLoaded = false;
@@ -72,6 +86,7 @@ export class MapComponent implements OnInit {
           this.minimapCache.clear();
           this.minimapData = {};
 
+          // eslint-disable-next-line no-console
           console.info('Rendering minimap for location');
 
           this.getMinimapDataForRoom(room.id, null);

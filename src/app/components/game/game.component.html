@@ -1,0 +1,16 @@
+<div class="game">
+  <p-dock [model]="dockItems" position="bottom" class="game__dock">
+    <ng-template pTemplate="item" let-item>
+      <button
+        pButton
+        pRipple
+        type="button"
+        [icon]="item.icon"
+        class="p-button-secondary"
+        [pTooltip]="item.label + ' (' + item.hotkey + ')'"
+        [showDelay]="500"
+        tooltipPosition="top"
+      ></button>
+    </ng-template>
+  </p-dock>
+</div>

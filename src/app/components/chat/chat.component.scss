@@ -1,0 +1,22 @@
+div.chat-screen {
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  width: 50vw;
+  overflow-y: auto;
+}
+
+div.chat-input {
+  width: 100%;
+  display: flex;
+
+  p-dropdown {
+    ::ng-deep div.p-dropdown.p-component {
+      border-radius: 0 !important;
+    }
+  }
+
+  input {
+    border-radius: 0;
+  }
+}

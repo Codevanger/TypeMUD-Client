@@ -1,0 +1,23 @@
+<p-dialog
+  header="Вход"
+  [visible]="displayLogin"
+  [closable]="false"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div class="login">
+    <div class="login__form" [formGroup]="loginForm">
+      <span>Вам необходимо залогиниться чтобы продолжить</span>
+
+      <input pInputText placeholder="Логин" formControlName="username" />
+      <p-password
+        placeholder="Пароль"
+        [feedback]="false"
+        formControlName="password"
+      ></p-password>
+
+      <button pButton type="button" label="Войти" (click)="login()"></button>
+    </div>
+  </div>
+</p-dialog>

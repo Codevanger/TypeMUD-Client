@@ -1,0 +1,32 @@
+.character {
+    height: 100%;
+
+  &__list {
+    padding: 0 10px;
+
+    max-height: 60vh;
+    width: 100%;
+
+    overflow-y: auto;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+
+    & > * {
+      margin: 0 5px;
+    }
+  }
+}

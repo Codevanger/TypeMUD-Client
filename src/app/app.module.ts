@@ -13,9 +13,15 @@ import { PasswordModule } from 'primeng/password';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { DividerModule } from 'primeng/divider';
 import { TooltipModule } from 'primeng/tooltip';
+import { DockModule } from 'primeng/dock';
 
 import { AppComponent } from './app.component';
 import { MapComponent } from './components/map/map.component';
+import { ChatComponent } from './components/chat/chat.component';
+import { CharSelectComponent } from './components/char-select/char-select.component';
+import { LoginComponent } from './components/login/login.component';
+import { GameComponent } from './components/game/game.component';
+
 import { AuthService } from './services/auth.service';
 import { WebsocketService } from './services/websocket.service';
 import { CharacterService } from './services/character.service';
@@ -26,7 +32,14 @@ import { StateService } from './services/state.service';
 import { MorphService } from './services/morph.service';
 
 @NgModule({
-  declarations: [AppComponent, MapComponent],
+  declarations: [
+    AppComponent,
+    MapComponent,
+    ChatComponent,
+    CharSelectComponent,
+    LoginComponent,
+    GameComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -42,6 +55,7 @@ import { MorphService } from './services/morph.service';
     ReactiveFormsModule,
     DividerModule,
     TooltipModule,
+    DockModule,
   ],
   providers: [
     WebsocketService,
