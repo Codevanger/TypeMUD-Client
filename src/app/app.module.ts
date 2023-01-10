@@ -12,17 +12,21 @@ import { DialogModule } from 'primeng/dialog';
 import { PasswordModule } from 'primeng/password';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { DividerModule } from 'primeng/divider';
+import { TooltipModule } from 'primeng/tooltip';
 
 import { AppComponent } from './app.component';
+import { MapComponent } from './components/map/map.component';
 import { AuthService } from './services/auth.service';
 import { WebsocketService } from './services/websocket.service';
 import { CharacterService } from './services/character.service';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { ChatService } from './services/chat.service';
 import { LocationService } from './services/location.service';
+import { StateService } from './services/state.service';
+import { MorphService } from './services/morph.service';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, MapComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -37,6 +41,7 @@ import { LocationService } from './services/location.service';
     ProgressSpinnerModule,
     ReactiveFormsModule,
     DividerModule,
+    TooltipModule,
   ],
   providers: [
     WebsocketService,
@@ -44,6 +49,8 @@ import { LocationService } from './services/location.service';
     CharacterService,
     ChatService,
     LocationService,
+    StateService,
+    MorphService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,

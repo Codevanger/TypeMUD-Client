@@ -24,7 +24,7 @@
         type="button"
         (click)="showExits()"
         icon="pi pi-info-circle"
-        [label]="this.displayExits ? 'Скрыть переходы' : 'Показать переходы'"
+        [label]="this.displayExits ? 'Скрыть карту' : 'Показать карту'"
       ></button>
 
       <p-divider layout="vertical"></p-divider>
@@ -79,21 +79,12 @@
 </p-dialog>
 
 <p-dialog
-  header="Переходы"
+  header="Карта"
   [(visible)]="displayExits"
   [closable]="false"
   appendTo="body"
 >
-  <div>
-    <ng-container>
-      <span *ngFor="let exit of (currentLocation$ | async)?.expandedExits">
-        <button (click)="moveToLocation(exit.id)" pButton style="margin: 5px">
-          {{ exit.name }}
-        </button>
-        <br />
-      </span>
-    </ng-container>
-  </div>
+  <app-map></app-map>
 </p-dialog>
 
 <p-dialog

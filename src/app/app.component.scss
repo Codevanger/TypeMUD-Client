@@ -91,3 +91,7 @@ div.character-select {
     padding: 2px;
   }
 }
+
+::ng-deep div.p-dialog-content {
+  overflow: hidden;
+}

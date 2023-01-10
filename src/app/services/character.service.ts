@@ -6,38 +6,21 @@ import { Character } from '../types/character';
 import { TransportCode } from '../types/transport-code';
 import { TransportMessage } from '../types/transport-message';
 import { AuthService } from './auth.service';
-import { LocationService } from './location.service';
+import { StateService } from './state.service';
 import { WebsocketService } from './websocket.service';
 
 @Injectable()
 export class CharacterService {
-  public character: Character;
-
   constructor(
     private wsService: WebsocketService,
     private authService: AuthService,
-    private locationService: LocationService,
+    private stateService: StateService,
     private http: HttpClient
   ) {
-    this.wsService.parsedConnection$
-      .pipe(
-        filter(
-          (message) =>
-            message.code === TransportCode.SELECTED_CHARACTER ||
-            message.code === TransportCode.CHARACTER_INFO
-        )
-      )
-      .subscribe((parsed: TransportMessage<{ character: Character }>) => {
-        this.character = parsed.data.character;
-        this.locationService.getCurrentLocation();
-      });
+    this.initCharacterListening();
   }
 
   public selectCharacter(characterId: number): void {
-    if (!this.wsService.connected) {
-      return null;
-    }
-
     if (!this.authService.loggedIn) {
       return null;
     }
@@ -46,10 +29,6 @@ export class CharacterService {
   }
 
   public getCurrentCharacter(): void {
-    if (!this.wsService.connected) {
-      return null;
-    }
-
     if (!this.authService.loggedIn) {
       return null;
     }
@@ -99,5 +78,19 @@ export class CharacterService {
     }
 
     return this.http.get<Character>(apiAdress + `/api/character/${id}`);
+  }
+
+  private initCharacterListening(): void {
+    this.wsService.parsedConnection$
+      .pipe(
+        filter(
+          (message) =>
+            message.code === TransportCode.SELECTED_CHARACTER ||
+            message.code === TransportCode.CHARACTER_INFO
+        )
+      )
+      .subscribe((parsed: TransportMessage<{ character: Character }>) => {
+        this.stateService.character = parsed.data.character;
+      });
   }
 }

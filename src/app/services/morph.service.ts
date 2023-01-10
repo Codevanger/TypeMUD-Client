@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import * as Az from '../../../Az/az.js';
+import { StateService } from './state.service';
 
 enum Cases {
   nominative = 'nomn',
@@ -10,10 +13,9 @@ enum Cases {
   prepositional = 'loct',
 }
 
+@Injectable()
 export class MorphService {
-  public morphLoaded$ = new BehaviorSubject<boolean>(false);
-
-  constructor() {
+  constructor(private stateService: StateService) {
     Az.Morph.init('./Az/dicts', (err, _) => {
       if (!err) {
         console.log('MorphService: Morph initialized');
@@ -21,24 +23,18 @@ export class MorphService {
         throw new Error('MorphService: Morph initialization failed');
       }
 
-      this.morphLoaded$.next(true);
-
-      console.log(
-        this.inflect('Александр', Cases.accusative),
-      );
+      this.stateService.morphLoaded = true;
     });
   }
 
   public inflect(word: string, caseName: Cases): string {
-    console.log(caseName);
-
-    if (!this.morphLoaded$.value) {
+    if (!this.stateService.morphLoaded) {
       throw new Error('MorphService: Morph not initialized');
     }
 
-    console.log(Az.Morph(word)[0]);
-
-    const morphedWord = Az.Morph(word)[0].inflect({ CAse: caseName } as any).word;
+    const morphedWord = Az.Morph(word)[0].inflect({
+      CAse: caseName,
+    } as any).word;
 
     return morphedWord;
   }

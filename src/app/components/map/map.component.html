@@ -1,0 +1,52 @@
+<div class="map" #map>
+  <div class="loading" *ngIf="!minimapLoaded">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+  <div class="map__container" [ngStyle]="{ transform: scale + translate }">
+    <ng-container *ngFor="let data of minimapData | keyvalue">
+      <div
+        class="map__chunk"
+        [ngStyle]="{
+          left: data.value.left + 'px',
+          bottom: data.value.bottom + 'px'
+        }"
+      >
+        <div
+          class="map__chunk__content"
+          [pTooltip]="
+            +data.key === +currentRoom.id
+              ? 'Вы здесь!'
+              : getRoom(+data.key)?.name
+          "
+          tooltipPosition="top"
+          (click)="goToRoom(+data.key)"
+        >
+          <ng-container *ngIf="+data.key === +currentRoom.id">
+            <h1>X</h1>
+          </ng-container>
+        </div>
+
+        <div
+          class="map__chunk__arrow"
+          *ngFor="let exit of getRoom(+data.key)?.exits"
+          [ngStyle]="getArrowPosition(exit)"
+          [ngClass]="{
+            'location-change': exit.locationId !== currentRoom.locationId
+          }"
+          [pTooltip]="
+            +exit.locationId !== currentRoom.locationId
+              ? 'Переход на другую локацию'
+              : ''
+          "
+          tooltipPosition="top"
+          (click)="
+            +data.key === +currentRoom.id &&
+            +exit.locationId !== currentRoom.locationId
+              ? toAnotherLocation(exit)
+              : null
+          "
+        ></div>
+      </div>
+    </ng-container>
+  </div>
+</div>

@@ -1,33 +1,19 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, filter } from 'rxjs';
-import { GameLocation } from '../types/locations';
+import { GameLocation, GameRoom } from '../types/locations';
 import { TransportCode } from '../types/transport-code';
 import { TransportMessage } from '../types/transport-message';
+import { StateService } from './state.service';
 import { WebsocketService } from './websocket.service';
 
 @Injectable()
 export class LocationService {
-  public currentLocation$ = new BehaviorSubject<GameLocation>(null);
-  public currentLocation = this.currentLocation$.getValue();
-
-  constructor(private wsService: WebsocketService) {
-    this.wsService.parsedConnection$
-      .pipe(
-        filter(
-          (message) =>
-            message.code === TransportCode.MOVED ||
-            message.code === TransportCode.MAP_INFO
-        )
-      )
-      .subscribe((parsed: TransportMessage<{ location: GameLocation }>) => {
-        this.currentLocation$.next(parsed.data.location);
-      });
-
-    this.wsService.parsedConnection$
-      .pipe(filter((data) => data.code === TransportCode.CHANGED))
-      .subscribe(() => {
-        this.getCurrentLocation();
-      });
+  constructor(
+    private wsService: WebsocketService,
+    private stateService: StateService
+  ) {
+    this.initLocationListening();
   }
 
   public getCurrentLocation(): void {
@@ -43,6 +29,39 @@ export class LocationService {
       return;
     }
 
+    if (!exit) {
+      return;
+    }
+
     this.wsService.sendMessage(`/move ${exit}`);
+  }
+
+  private initLocationListening(): void {
+    this.wsService.parsedConnection$
+      .pipe(
+        filter(
+          (message) =>
+            message.code === TransportCode.MOVED ||
+            message.code === TransportCode.MAP_INFO ||
+            message.code === TransportCode.LOCATION_INFO ||
+            message.code === TransportCode.ROOM_INFO
+        )
+      )
+      .subscribe(
+        (
+          parsed: TransportMessage<{ location: GameLocation; room: GameRoom }>
+        ) => {
+          this.stateService.currentRoom = parsed.data.room;
+          this.stateService.currentLocation = parsed.data.location;
+
+          this.stateService.character = parsed.initiator.character;
+        }
+      );
+
+    this.wsService.parsedConnection$
+      .pipe(filter((data) => data.code === TransportCode.SELECTED_CHARACTER))
+      .subscribe(() => {
+        this.getCurrentLocation();
+      });
   }
 }

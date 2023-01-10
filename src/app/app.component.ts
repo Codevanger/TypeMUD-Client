@@ -5,21 +5,12 @@ import { AuthService } from './services/auth.service';
 import { WebsocketService } from './services/websocket.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CharacterService } from './services/character.service';
-import {
-  debounceTime,
-  filter,
-  first,
-  map,
-  Observable,
-  of,
-  switchMap,
-  timer,
-} from 'rxjs';
+import { filter, Observable, of, switchMap, timer } from 'rxjs';
 import { Character } from './types/character';
 import { ChatService } from './services/chat.service';
 import { LocationService } from './services/location.service';
 import { GameLocation } from './types/locations';
-import { MorphService } from './services/morph.service';
+import { StateService } from './services/state.service';
 
 @Component({
   selector: 'app-root',
@@ -64,7 +55,8 @@ export class AppComponent implements OnInit {
     private characterService: CharacterService,
     private wsService: WebsocketService,
     private chatService: ChatService,
-    private locationService: LocationService
+    private locationService: LocationService,
+    private stateService: StateService
   ) {
     console.log('APP_CONFIG', APP_CONFIG);
 
@@ -75,33 +67,34 @@ export class AppComponent implements OnInit {
 
     this.wsService.connect(serverAddress);
 
-    this.chatService.lastMessage$
+    this.wsService.connected$
+      .pipe(
+        switchMap(() => this.authService.login('CodeVanger', 'run2qrxm')),
+        switchMap(() => timer(1000))
+      )
+      .subscribe(() => {
+        this.selectCharacter(9);
+      });
+
+    this.stateService.lastMessage$
       .pipe(switchMap(() => timer(100)))
       .subscribe(() => {
-        console.log({
-          scrollTop: this.chatScreen?.nativeElement?.scrollTop,
-          scrollHeight: this.chatScreen?.nativeElement?.scrollHeight,
-          chatScreen: this.chatScreen?.nativeElement,
-        });
-
         if (this.chatScreen) {
           this.chatScreen.nativeElement.scrollTo({
             top: this.chatScreen.nativeElement.scrollHeight,
           });
         }
       });
-
-      const morph = new MorphService();
   }
 
   public get currentLocation$(): Observable<GameLocation> {
-    return this.locationService.currentLocation$.pipe(
+    return this.stateService.currentLocation$.pipe(
       filter((location) => !!location)
     );
   }
 
   public get currentCharacter(): Character {
-    return this.characterService.character;
+    return this.stateService.character;
   }
 
   public get displayLogin(): boolean {
@@ -109,7 +102,7 @@ export class AppComponent implements OnInit {
   }
 
   public get displayCharacterSelect(): boolean {
-    return this.authService.loggedIn && !this.characterService.character;
+    return this.authService.loggedIn && !this.stateService.character;
   }
 
   public get connected(): boolean {
@@ -117,7 +110,7 @@ export class AppComponent implements OnInit {
   }
 
   public get messages(): string[] {
-    return this.chatService.chatLog;
+    return this.stateService.chatLog;
   }
 
   public getCharacters(): Observable<Character[]> {

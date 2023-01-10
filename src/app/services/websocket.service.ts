@@ -44,7 +44,6 @@ export class WebsocketService {
       .subscribe(() => this.connected$.next(true));
 
     this.parsedConnection$.subscribe({
-      next: (data) => console.log('data: ', data),
       error: (err) => {
         console.log('error: ', err);
 
@@ -52,7 +51,10 @@ export class WebsocketService {
           this.disconnect();
         }
       },
-      complete: () => console.log('complete'),
+      complete: () => {
+        console.log('complete');
+        this.disconnect();
+      },
     });
   }
 
@@ -63,6 +65,10 @@ export class WebsocketService {
   }
 
   public sendMessage(message: string) {
+    if (!this.connected) {
+      return null;
+    }
+
     this.connection$.next(message);
   }
 }
