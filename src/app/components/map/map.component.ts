@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 import {
   Component,
   ElementRef,
@@ -31,12 +32,6 @@ export class MapComponent implements OnInit {
   @ViewChild('map', { static: true })
   public map: ElementRef<HTMLDivElement>;
 
-  @Input()
-  public displayMap = false;
-
-  @Output()
-  public displayMapChange = new EventEmitter<boolean>();
-
   public minimapCache = new Set<number>();
   public minimapLoaded = false;
 
@@ -53,6 +48,14 @@ export class MapComponent implements OnInit {
     private stateService: StateService,
     private locationService: LocationService
   ) {}
+
+  public get showMap(): boolean {
+    return this.stateService.showMap;
+  }
+
+  public set showMap(value: boolean) {
+    this.stateService.showMap = value;
+  }
 
   public get currentRoom(): GameRoom {
     return this.stateService.currentRoom;

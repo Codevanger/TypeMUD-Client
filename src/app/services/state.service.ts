@@ -17,6 +17,11 @@ export class StateService {
   private _lastMessage$ = new BehaviorSubject<string>('');
   private _chatLog$ = new BehaviorSubject<string[]>([]);
 
+  private _showMap$ = new BehaviorSubject<boolean>(false);
+  private _showChat$ = new BehaviorSubject<boolean>(false);
+  private _showInventory$ = new BehaviorSubject<boolean>(false);
+  private _showCharacterInfo$ = new BehaviorSubject<boolean>(false);
+
   public get currentLocation$(): Observable<GameLocation> {
     return this._currentLocation$.asObservable();
   }
@@ -87,5 +92,53 @@ export class StateService {
 
   public set chatLog(log: Array<string>) {
     this._chatLog$.next(log);
+  }
+
+  public get showMap$(): Observable<boolean> {
+    return this._showMap$.asObservable();
+  }
+
+  public get showMap(): boolean {
+    return this._showMap$.value;
+  }
+
+  public set showMap(show: boolean) {
+    this._showMap$.next(show);
+  }
+
+  public get showChat$(): Observable<boolean> {
+    return this._showChat$.asObservable();
+  }
+
+  public get showChat(): boolean {
+    return this._showChat$.value;
+  }
+
+  public set showChat(show: boolean) {
+    this._showChat$.next(show);
+  }
+
+  public get showInventory$(): Observable<boolean> {
+    return this._showInventory$.asObservable();
+  }
+
+  public get showInventory(): boolean {
+    return this._showInventory$.value;
+  }
+
+  public set showInventory(show: boolean) {
+    this._showInventory$.next(show);
+  }
+
+  public get showCharacterInfo$(): Observable<boolean> {
+    return this._showCharacterInfo$.asObservable();
+  }
+
+  public get showCharacterInfo(): boolean {
+    return this._showCharacterInfo$.value;
+  }
+
+  public set showCharacterInfo(show: boolean) {
+    this._showCharacterInfo$.next(show);
   }
 }

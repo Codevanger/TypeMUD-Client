@@ -40,6 +40,7 @@ export class GameComponent {
       label: 'Карта',
       icon: 'pi pi-map',
       hotkey: 'Alt + M',
+      command: () => this.showMap(),
     },
     {
       label: 'Персонаж',
@@ -62,4 +63,8 @@ export class GameComponent {
       hotkey: 'Alt + F',
     },
   ];
+
+  public showMap(): void {
+    this.stateService.showMap = !this.stateService.showMap;
+  }
 }

@@ -1,4 +1,4 @@
-<p-dialog header="Карта" [(visible)]="displayMap" [resizable]="false">
+<p-dialog header="Карта" [(visible)]="showMap" [resizable]="false">
   <div class="map" #map>
     <div class="loading" *ngIf="!minimapLoaded">
       <p-progressSpinner></p-progressSpinner>
