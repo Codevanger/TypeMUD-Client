@@ -8,8 +8,9 @@
   <div class="character__container">
     <div class="character__list">
       <div class="character__item" *ngFor="let character of characters">
-        <div class="character-info">
-          <span class="character-name">{{ character.name }}</span>
+        <div class="character__item__info">
+          <span class="character__name">{{ character.name }}</span>
+          <span class="character__level">Уровень: {{ character.level }}</span>
         </div>
         <div>
           <button
