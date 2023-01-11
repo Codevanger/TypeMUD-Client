@@ -1,5 +1,5 @@
 export declare interface User {
-  id: number;
+  userId: number;
   username: string;
   role: number;
 }

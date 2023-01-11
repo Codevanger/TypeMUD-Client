@@ -1,15 +1,8 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { APP_CONFIG } from '../environments/environment';
 import { PrimeNGConfig } from 'primeng/api';
 import { AuthService } from './services/auth.service';
 import { WebsocketService } from './services/websocket.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CharacterService } from './services/character.service';
-import { filter, Observable, of, switchMap, timer } from 'rxjs';
-import { Character } from './types/character';
-import { ChatService } from './services/chat.service';
-import { LocationService } from './services/location.service';
-import { GameLocation, GameRoom } from './types/locations';
 import { StateService } from './services/state.service';
 
 @Component({

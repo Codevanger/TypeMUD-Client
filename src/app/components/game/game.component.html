@@ -1,4 +1,16 @@
-<div class="game">
+<div class="game" *ngIf="canPlay$ | async">
+  <div class="game__screen">
+    <div class="game__screen__header">
+      <h1>
+        {{ (currentLocation$ | async).name }}
+      </h1>
+      <h2>
+        {{ (currentRoom$ | async).description }}
+      </h2>
+    </div>
+    <div class="game__screen__content"></div>
+  </div>
+
   <p-dock [model]="dockItems" position="bottom" class="game__dock">
     <ng-template pTemplate="item" let-item>
       <button
