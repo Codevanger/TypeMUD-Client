@@ -1,0 +1,10 @@
+.progress {
+  background-color: #e0e0e0;
+  height: 10px;
+  transition: 0.5s;
+
+  &__bar {
+    height: 11px;
+    transition: 0.5s;
+  }
+}

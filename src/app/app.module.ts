@@ -21,6 +21,7 @@ import { ChatComponent } from './components/chat/chat.component';
 import { CharSelectComponent } from './components/char-select/char-select.component';
 import { LoginComponent } from './components/login/login.component';
 import { GameComponent } from './components/game/game.component';
+import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 
 import { AuthService } from './services/auth.service';
 import { WebsocketService } from './services/websocket.service';
@@ -39,6 +40,7 @@ import { MorphService } from './services/morph.service';
     CharSelectComponent,
     LoginComponent,
     GameComponent,
+    ProgressBarComponent,
   ],
   imports: [
     BrowserModule,
