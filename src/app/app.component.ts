@@ -11,9 +11,6 @@ import { StateService } from './services/state.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  public displayChat = false;
-  public displayMap = false;
-
   constructor(
     private primengConfig: PrimeNGConfig,
     private authService: AuthService,
@@ -43,13 +40,5 @@ export class AppComponent implements OnInit {
 
   public ngOnInit() {
     this.primengConfig.ripple = true;
-  }
-
-  public showDialog() {
-    this.displayChat = !this.displayChat;
-  }
-
-  public showMap() {
-    this.displayMap = !this.displayMap;
   }
 }
