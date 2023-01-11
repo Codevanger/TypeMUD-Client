@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Component } from '@angular/core';
 import { combineLatest, debounce, filter, map, Observable } from 'rxjs';
@@ -11,7 +12,9 @@ import { GameLocation, GameRoom } from '../../types/locations';
   styleUrls: ['./game.component.scss'],
 })
 export class GameComponent {
-  constructor(private stateService: StateService) {}
+  constructor(private stateService: StateService) {
+    this.listenToHotkeys();
+  }
 
   public get currentLocation$(): Observable<GameLocation> {
     return this.stateService.currentLocation$;
@@ -56,6 +59,7 @@ export class GameComponent {
       label: 'Чат',
       icon: 'pi pi-comments',
       hotkey: 'Alt + C',
+      command: () => this.showChat(),
     },
     {
       label: 'Друзья',
@@ -66,5 +70,22 @@ export class GameComponent {
 
   public showMap(): void {
     this.stateService.showMap = !this.stateService.showMap;
+  }
+
+  public showChat(): void {
+    this.stateService.showChat = !this.stateService.showChat;
+  }
+
+  private listenToHotkeys(): void {
+    const hotkeys = {
+      M: () => this.showMap(),
+      C: () => this.showChat(),
+    };
+
+    window.addEventListener('keydown', (event) => {
+      if (event.altKey && hotkeys[event.key.toUpperCase()]) {
+        hotkeys[event.key.toUpperCase()]();
+      }
+    });
   }
 }

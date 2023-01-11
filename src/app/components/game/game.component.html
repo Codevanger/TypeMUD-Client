@@ -1,14 +1,24 @@
 <div class="game" *ngIf="canPlay$ | async">
   <div class="game__screen">
     <div class="game__screen__header">
-      <h1>
-        {{ (currentLocation$ | async).name }}
-      </h1>
-      <h2>
-        {{ (currentRoom$ | async).description }}
-      </h2>
+      <span>
+        {{ (character$ | async).name }}
+        <app-progress-bar [value]="0.5" [color]="'red'"></app-progress-bar>
+      </span>
     </div>
-    <div class="game__screen__content"></div>
+    <div class="game__screen__content">
+      <div class="game_screen location">
+        <div class="location__header">
+          <span>{{ (currentLocation$ | async).name }}</span>
+          <span>{{ (currentRoom$ | async).name }}</span>
+        </div>
+        <div class="location__description">
+          <p>{{ (currentLocation$ | async).description }}</p>
+          <br />
+          <p>{{ (currentRoom$ | async).description }}</p>
+        </div>
+      </div>
+    </div>
   </div>
 
   <p-dock [model]="dockItems" position="bottom" class="game__dock">

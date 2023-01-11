@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/member-ordering */
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { switchMap, timer } from 'rxjs';
 import { ChatService } from '../../services/chat.service';
 import { StateService } from '../../services/state.service';
@@ -28,11 +28,13 @@ export class ChatComponent {
     },
   ];
 
-  @Input()
-  public displayChat = false;
+  public get displayChat(): boolean {
+    return this.stateService.showChat;
+  }
 
-  @Output()
-  public displayChatChange = new EventEmitter<boolean>();
+  public set displayChat(value: boolean) {
+    this.stateService.showChat = value;
+  }
 
   @ViewChild('chatScreen', { static: false })
   public chatScreen: ElementRef<HTMLDivElement>;

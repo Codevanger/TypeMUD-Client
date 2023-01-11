@@ -1,4 +1,33 @@
 .game {
+  &__screen {
+    padding: 10px;
+
+    &__header {
+      border-bottom: 1px solid whitesmoke;
+    }
+
+    &__content {
+      & .location {
+        &__header {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 100%;
+          border-bottom: 1px solid whitesmoke;
+
+          span {
+            font-size: 1.5rem;
+            font-weight: bold;
+          }
+        }
+
+        &__description {
+
+        }
+      }
+    }
+  }
+
   &__dock {
     button {
       width: 100%;
