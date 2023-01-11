@@ -17,7 +17,17 @@
         formControlName="password"
       ></p-password>
 
+      <p-checkbox
+        label="Запомнить меня"
+        name="rememberMe"
+        formControlName="rememberMe"
+        [binary]="true"
+      ></p-checkbox>
+
       <button pButton type="button" label="Войти" (click)="login()"></button>
     </div>
   </div>
 </p-dialog>
+
+<p-confirmDialog header="Подтверждение сохранения данных" icon="pi pi-exclamation-triangle">
+</p-confirmDialog>

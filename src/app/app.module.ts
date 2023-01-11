@@ -14,6 +14,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { DividerModule } from 'primeng/divider';
 import { TooltipModule } from 'primeng/tooltip';
 import { DockModule } from 'primeng/dock';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { AppComponent } from './app.component';
 import { MapComponent } from './components/map/map.component';
@@ -31,6 +33,7 @@ import { ChatService } from './services/chat.service';
 import { LocationService } from './services/location.service';
 import { StateService } from './services/state.service';
 import { MorphService } from './services/morph.service';
+import { ConfirmationService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -58,6 +61,8 @@ import { MorphService } from './services/morph.service';
     DividerModule,
     TooltipModule,
     DockModule,
+    CheckboxModule,
+    ConfirmDialogModule
   ],
   providers: [
     WebsocketService,
@@ -67,6 +72,7 @@ import { MorphService } from './services/morph.service';
     LocationService,
     StateService,
     MorphService,
+    ConfirmationService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
