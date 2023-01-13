@@ -1,7 +1,30 @@
 <!-- custom progress bar -->
-<div class="progress">
+<div
+  class="progress"
+  [ngStyle]="{
+    height: height + 'px',
+    background:
+      'linear-gradient(90deg, var(--' +
+      color +
+      '-500) 0%, var(--' +
+      color +
+      '-900) 100%)'
+  }"
+>
   <div
     class="progress__bar"
-    [ngStyle]="{ width: progress + '%', backgroundColor: color }"
+    [ngStyle]="{
+      width: progress + '%',
+      height: height + 'px',
+      background:
+        'linear-gradient(90deg, var(--' +
+        color +
+        '-200) 0%, var(--' +
+        color +
+        '-400) 100%)',
+      boxShadow: '0 0 5px var(--' + color + '-300)'
+    }"
   ></div>
+
+  <span class="progress__value"> {{ progress }}% </span>
 </div>

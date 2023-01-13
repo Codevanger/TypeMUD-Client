@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-progress-bar',
@@ -9,6 +9,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class ProgressBarComponent {
   @Input() public value: number;
   @Input() public color: string;
+  @Input() public height = 10;
 
   public get progress(): number {
     return this.value * 100;

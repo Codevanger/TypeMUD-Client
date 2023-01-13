@@ -24,6 +24,7 @@ import { CharSelectComponent } from './components/char-select/char-select.compon
 import { LoginComponent } from './components/login/login.component';
 import { GameComponent } from './components/game/game.component';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
+import { CharacterInfoComponent } from './components/character-info/character-info.component';
 
 import { AuthService } from './services/auth.service';
 import { WebsocketService } from './services/websocket.service';
@@ -34,6 +35,7 @@ import { LocationService } from './services/location.service';
 import { StateService } from './services/state.service';
 import { MorphService } from './services/morph.service';
 import { ConfirmationService } from 'primeng/api';
+import { FriendsService } from './services/friends.service';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,7 @@ import { ConfirmationService } from 'primeng/api';
     LoginComponent,
     GameComponent,
     ProgressBarComponent,
+    CharacterInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -72,6 +75,7 @@ import { ConfirmationService } from 'primeng/api';
     LocationService,
     StateService,
     MorphService,
+    FriendsService,
     ConfirmationService,
     {
       provide: HTTP_INTERCEPTORS,

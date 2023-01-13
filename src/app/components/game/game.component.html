@@ -1,20 +1,67 @@
 <div class="game" *ngIf="canPlay$ | async">
   <div class="game__screen">
     <div class="game__screen__header">
-      <span>
-        {{ (character$ | async).name }}
-        <app-progress-bar [value]="0.5" [color]="'red'"></app-progress-bar>
-      </span>
+      <div class="character">
+        <div class="character__name">
+          <h2>
+            {{ (character$ | async)?.name || 'Инкогнито' }}
+          </h2>
+          <h3>
+            {{ (character$ | async)?.level || 0 }} УР.
+          </h3>
+        </div>
+
+        <div class="character__stats">
+          <div class="row">
+            <span> ХП: </span>
+            <div class="progress-bar">
+              <app-progress-bar
+                [value]="currentHpPercent$ | async"
+                [color]="'red'"
+                [height]="25"
+              ></app-progress-bar>
+            </div>
+          </div>
+          <div class="row">
+            <span>Стамина:</span>
+            <div class="progress-bar">
+              <app-progress-bar
+                [value]="currentStaminaPercent$ | async"
+                [color]="'orange'"
+                [height]="25"
+              ></app-progress-bar>
+            </div>
+          </div>
+          <div class="row">
+            <span>Мана:</span>
+            <div class="progress-bar">
+              <app-progress-bar
+                [value]="currentManaPercent$ | async"
+                [color]="'blue'"
+                [height]="25"
+              ></app-progress-bar>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <p-divider></p-divider>
+
     <div class="game__screen__content">
       <div class="game_screen location">
         <div class="location__header">
           <span>{{ (currentLocation$ | async).name }}</span>
-          <span>{{ (currentRoom$ | async).name }}</span>
+
+          <p-divider></p-divider>
+
+          <span class="sub-header">{{ (currentRoom$ | async).name }}</span>
         </div>
+
+        <p-divider></p-divider>
+
         <div class="location__description">
           <p>{{ (currentLocation$ | async).description }}</p>
-          <br />
           <p>{{ (currentRoom$ | async).description }}</p>
         </div>
       </div>

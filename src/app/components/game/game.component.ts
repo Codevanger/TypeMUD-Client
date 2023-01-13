@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Component } from '@angular/core';
-import { combineLatest, debounce, filter, map, Observable } from 'rxjs';
+import { combineLatest, map, Observable, tap } from 'rxjs';
 import { StateService } from '../../services/state.service';
-import { Character } from '../../types/character';
+import { Character, CharacterView } from '../../types/character';
 import { GameLocation, GameRoom } from '../../types/locations';
 
 @Component({
@@ -24,8 +24,32 @@ export class GameComponent {
     return this.stateService.currentRoom$;
   }
 
-  public get character$(): Observable<Character> {
-    return this.stateService.character$;
+  public get character$(): Observable<CharacterView> {
+    return this.stateService.characterView$;
+  }
+
+  public get currentHpPercent$(): Observable<number> {
+    return this.stateService.characterView$.pipe(
+      map(
+        (character) =>
+          +Number(character.health / character.maxHealth).toFixed(2)
+      )
+    );
+  }
+
+  public get currentManaPercent$(): Observable<number> {
+    return this.stateService.characterView$.pipe(
+      map((character) => +Number(character.mana / character.maxMana).toFixed(2))
+    );
+  }
+
+  public get currentStaminaPercent$(): Observable<number> {
+    return this.stateService.characterView$.pipe(
+      map(
+        (character) =>
+          +Number(character.stamina / character.maxStamina).toFixed(2)
+      )
+    );
   }
 
   public get canPlay$(): Observable<boolean> {
@@ -49,6 +73,7 @@ export class GameComponent {
       label: 'Персонаж',
       icon: 'pi pi-user',
       hotkey: 'Alt + P',
+      command: () => this.showCharacterInfo(),
     },
     {
       label: 'Инвентарь',
@@ -76,10 +101,15 @@ export class GameComponent {
     this.stateService.showChat = !this.stateService.showChat;
   }
 
+  public showCharacterInfo(): void {
+    this.stateService.showCharacterInfo = !this.stateService.showCharacterInfo;
+  }
+
   private listenToHotkeys(): void {
     const hotkeys = {
       M: () => this.showMap(),
       C: () => this.showChat(),
+      P: () => this.showCharacterInfo(),
     };
 
     window.addEventListener('keydown', (event) => {

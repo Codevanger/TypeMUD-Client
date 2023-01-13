@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Character } from '../types/character';
+import { BehaviorSubject, filter, map, Observable } from 'rxjs';
+import { Character, CharacterView } from '../types/character';
 import { GameLocation, GameRoom } from '../types/locations';
 
 @Injectable()
@@ -56,6 +56,13 @@ export class StateService {
 
   public set character(character: Character) {
     this._character$.next(character);
+  }
+
+  public get characterView$(): Observable<CharacterView> {
+    return this._character$.pipe(
+      filter((character) => !!character),
+      map((character) => new CharacterView(character))
+    );
   }
 
   public get morphLoaded$(): Observable<boolean> {
