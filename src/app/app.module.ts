@@ -36,6 +36,7 @@ import { StateService } from './services/state.service';
 import { MorphService } from './services/morph.service';
 import { ConfirmationService } from 'primeng/api';
 import { FriendsService } from './services/friends.service';
+import { StatsService } from './services/stats.service';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import { FriendsService } from './services/friends.service';
     LoginComponent,
     GameComponent,
     ProgressBarComponent,
-    CharacterInfoComponent
+    CharacterInfoComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,7 +66,7 @@ import { FriendsService } from './services/friends.service';
     TooltipModule,
     DockModule,
     CheckboxModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
   ],
   providers: [
     WebsocketService,
@@ -77,6 +78,7 @@ import { FriendsService } from './services/friends.service';
     MorphService,
     FriendsService,
     ConfirmationService,
+    StatsService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,

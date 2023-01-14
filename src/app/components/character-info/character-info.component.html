@@ -1,24 +1,76 @@
 <p-dialog header="Персонаж" [(visible)]="showCharacterInfo" [resizable]="false">
   <div class="character-info">
     <div class="character-info__row">
+      <button pButton (click)="reset()">Сбросить</button>
+      <span>
+        Очков: {{ ((character$ | async)?.freeStats || 0) - this.spentPoints }}
+      </span>
+      <button pButton (click)="save()">Сохранить</button>
+    </div>
+    <div class="character-info__row">
       <div class="character-info__cell">
         <div class="character-info__cell-label">Сила</div>
         <div class="character-info__cell-value">
-          {{ (character$ | async)?.stats.str || '0' }}
+          <span
+            [style.color]="statsForm.get('str').value > 0 ? 'green' : 'initial'"
+          >
+            {{
+              statsForm.get("str").value +
+                ((character$ | async)?.stats.str || 0)
+            }}
+          </span>
+
+          <button
+            pButton
+            icon="pi pi-plus"
+            class="p-button-rounded p-button-text"
+            (click)="updateStats('str')"
+            [disabled]="(character$ | async)?.freeStats - this.spentPoints <= 0"
+          ></button>
         </div>
       </div>
 
       <div class="character-info__cell">
         <div class="character-info__cell-label">Ловкость</div>
         <div class="character-info__cell-value">
-          {{ (character$ | async)?.stats.dex || '0' }}
+          <span
+            [style.color]="statsForm.get('dex').value > 0 ? 'green' : 'initial'"
+          >
+            {{
+              statsForm.get("dex").value +
+                ((character$ | async)?.stats.dex || 0)
+            }}
+          </span>
+
+          <button
+            pButton
+            icon="pi pi-plus"
+            class="p-button-rounded p-button-text"
+            (click)="updateStats('dex')"
+            [disabled]="(character$ | async)?.freeStats - this.spentPoints <= 0"
+          ></button>
         </div>
       </div>
 
       <div class="character-info__cell">
         <div class="character-info__cell-label">Живучесть</div>
         <div class="character-info__cell-value">
-          {{ (character$ | async)?.stats.vit || '0' }}
+          <span
+            [style.color]="statsForm.get('vit').value > 0 ? 'green' : 'initial'"
+          >
+            {{
+              statsForm.get("vit").value +
+                ((character$ | async)?.stats.vit || 0)
+            }}
+          </span>
+
+          <button
+            pButton
+            icon="pi pi-plus"
+            class="p-button-rounded p-button-text"
+            (click)="updateStats('vit')"
+            [disabled]="(character$ | async)?.freeStats - this.spentPoints <= 0"
+          ></button>
         </div>
       </div>
     </div>
@@ -27,21 +79,66 @@
       <div class="character-info__cell">
         <div class="character-info__cell-label">Выносливость</div>
         <div class="character-info__cell-value">
-          {{ (character$ | async)?.stats.end || '0' }}
+          <span
+            [style.color]="statsForm.get('end').value > 0 ? 'green' : 'initial'"
+          >
+            {{
+              statsForm.get("end").value +
+                ((character$ | async)?.stats.end || 0)
+            }}
+          </span>
+
+          <button
+            pButton
+            icon="pi pi-plus"
+            class="p-button-rounded p-button-text"
+            (click)="updateStats('end')"
+            [disabled]="(character$ | async)?.freeStats - this.spentPoints <= 0"
+          ></button>
         </div>
       </div>
 
       <div class="character-info__cell">
         <div class="character-info__cell-label">Интеллект</div>
         <div class="character-info__cell-value">
-          {{ (character$ | async)?.stats.int || '0' }}
+          <span
+            [style.color]="statsForm.get('int').value > 0 ? 'green' : 'initial'"
+          >
+            {{
+              statsForm.get("int").value +
+                ((character$ | async)?.stats.int || 0)
+            }}
+          </span>
+
+          <button
+            pButton
+            icon="pi pi-plus"
+            class="p-button-rounded p-button-text"
+            (click)="updateStats('int')"
+            [disabled]="(character$ | async)?.freeStats - this.spentPoints <= 0"
+          ></button>
         </div>
       </div>
 
       <div class="character-info__cell">
         <div class="character-info__cell-label">Мудрость</div>
         <div class="character-info__cell-value">
-          {{ (character$ | async)?.stats.wis || '0' }}
+          <span
+            [style.color]="statsForm.get('wis').value > 0 ? 'green' : 'initial'"
+          >
+            {{
+              statsForm.get("wis").value +
+                ((character$ | async)?.stats.wis || 0)
+            }}
+          </span>
+
+          <button
+            pButton
+            icon="pi pi-plus"
+            class="p-button-rounded p-button-text"
+            (click)="updateStats('wis')"
+            [disabled]="(character$ | async)?.freeStats - this.spentPoints <= 0"
+          ></button>
         </div>
       </div>
     </div>
@@ -52,27 +149,48 @@
       <div class="character-info__cell">
         <div class="character-info__cell-label">Макс. здоровье</div>
         <div class="character-info__cell-value">
-          {{ (character$ | async)?.maxHealth || '0' }}
+          {{ (character$ | async)?.maxHealth || 0 }}
         </div>
       </div>
 
       <div class="character-info__cell">
         <div class="character-info__cell-label">Макс. мана</div>
         <div class="character-info__cell-value">
-          {{ (character$ | async)?.maxMana || '0' }}
+          {{ (character$ | async)?.maxMana || 0 }}
         </div>
       </div>
 
       <div class="character-info__cell">
         <div class="character-info__cell-label">Макс. стамина</div>
         <div class="character-info__cell-value">
-          {{ (character$ | async)?.maxStamina || '0' }}
+          {{ (character$ | async)?.maxStamina || 0 }}
         </div>
       </div>
     </div>
 
     <div class="character-info__row">
-        
+      <div class="character-info__cell">
+        <div class="character-info__cell-label">Реген. здоровья</div>
+        <div class="character-info__cell-value">
+          {{ (character$ | async)?.healthRegen || 0 }}
+        </div>
+      </div>
+
+      <div class="character-info__cell">
+        <div class="character-info__cell-label">Реген. маны</div>
+        <div class="character-info__cell-value">
+          {{ (character$ | async)?.manaRegen || 0 }}
+        </div>
+      </div>
+
+      <div class="character-info__cell">
+        <div class="character-info__cell-label">Реген. стамины</div>
+        <div class="character-info__cell-value">
+          {{ (character$ | async)?.staminaRegen || 0 }}
+        </div>
+      </div>
     </div>
+
+    <div class="character-info__row"></div>
   </div>
 </p-dialog>

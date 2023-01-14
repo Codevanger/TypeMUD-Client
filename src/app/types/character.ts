@@ -13,6 +13,7 @@ export declare interface Character {
   stamina: number;
   mana: number;
   money: number;
+  freeStats: number;
 
   friends: string;
   skills: string;
@@ -32,6 +33,7 @@ export class CharacterView {
     this.stamina = character.stamina;
     this.mana = character.mana;
     this.money = character.money;
+    this.freeStats = character.freeStats;
 
     this._stats = character.stats;
     this._skills = character.skills;
@@ -58,6 +60,7 @@ export class CharacterView {
   public stamina: number;
   public mana: number;
   public money: number;
+  public freeStats: number;
 
   public stats: Stats;
   public friends: Character[];
@@ -71,7 +74,7 @@ export class CharacterView {
 
   public get maxHealth(): number {
     return Math.floor(
-      100 + this.stats.vit * 10 + Math.max(this.stats.vit * 0.5)
+      100 + this.stats.vit * 10 + Math.max(this.stats.end * 0.5)
     );
   }
 
