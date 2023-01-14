@@ -10,9 +10,11 @@ import { CharacterView } from '../../types/character';
   styleUrls: ['./character-info.component.scss'],
 })
 export class CharacterInfoComponent {
-  public get characterView$(): Observable<CharacterView> {
-    return this.stateService.characterView$;
+  constructor(private stateService: StateService) {
+    this.character$ = this.stateService.getCharacterView$();
   }
+
+  public character$: Observable<CharacterView>;
 
   public get showCharacterInfo(): boolean {
     return this.stateService.showCharacterInfo;
@@ -21,6 +23,4 @@ export class CharacterInfoComponent {
   public set showCharacterInfo(value: boolean) {
     this.stateService.showCharacterInfo = value;
   }
-
-  constructor(private stateService: StateService) {}
 }

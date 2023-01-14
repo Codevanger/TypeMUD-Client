@@ -14,7 +14,11 @@ import { GameLocation, GameRoom } from '../../types/locations';
 export class GameComponent {
   constructor(private stateService: StateService) {
     this.listenToHotkeys();
+
+    this.character$ = this.stateService.getCharacterView$();
   }
+
+  public character$: Observable<CharacterView>;
 
   public get currentLocation$(): Observable<GameLocation> {
     return this.stateService.currentLocation$;
@@ -22,34 +26,6 @@ export class GameComponent {
 
   public get currentRoom$(): Observable<GameRoom> {
     return this.stateService.currentRoom$;
-  }
-
-  public get character$(): Observable<CharacterView> {
-    return this.stateService.characterView$;
-  }
-
-  public get currentHpPercent$(): Observable<number> {
-    return this.stateService.characterView$.pipe(
-      map(
-        (character) =>
-          +Number(character.health / character.maxHealth).toFixed(2)
-      )
-    );
-  }
-
-  public get currentManaPercent$(): Observable<number> {
-    return this.stateService.characterView$.pipe(
-      map((character) => +Number(character.mana / character.maxMana).toFixed(2))
-    );
-  }
-
-  public get currentStaminaPercent$(): Observable<number> {
-    return this.stateService.characterView$.pipe(
-      map(
-        (character) =>
-          +Number(character.stamina / character.maxStamina).toFixed(2)
-      )
-    );
   }
 
   public get canPlay$(): Observable<boolean> {
@@ -90,6 +66,11 @@ export class GameComponent {
       label: 'Друзья',
       icon: 'pi pi-users',
       hotkey: 'Alt + F',
+    },
+    {
+      label: 'Умения',
+      icon: 'pi pi-book',
+      hotkey: 'Alt + B',
     },
   ];
 

@@ -4,11 +4,9 @@
       <div class="character">
         <div class="character__name">
           <h2>
-            {{ (character$ | async)?.name || 'Инкогнито' }}
+            {{ (character$ | async)?.name || "Инкогнито" }}
           </h2>
-          <h3>
-            {{ (character$ | async)?.level || 0 }} УР.
-          </h3>
+          <h3>{{ (character$ | async)?.level || 0 }} УР.</h3>
         </div>
 
         <div class="character__stats">
@@ -16,7 +14,7 @@
             <span> ХП: </span>
             <div class="progress-bar">
               <app-progress-bar
-                [value]="currentHpPercent$ | async"
+                [value]="(character$ | async)?.healthPercent || 0"
                 [color]="'red'"
                 [height]="25"
               ></app-progress-bar>
@@ -26,7 +24,7 @@
             <span>Стамина:</span>
             <div class="progress-bar">
               <app-progress-bar
-                [value]="currentStaminaPercent$ | async"
+                [value]="(character$ | async)?.staminaPercent"
                 [color]="'orange'"
                 [height]="25"
               ></app-progress-bar>
@@ -36,7 +34,7 @@
             <span>Мана:</span>
             <div class="progress-bar">
               <app-progress-bar
-                [value]="currentManaPercent$ | async"
+                [value]="(character$ | async)?.manaPercent"
                 [color]="'blue'"
                 [height]="25"
               ></app-progress-bar>

@@ -1,3 +1,30 @@
-:host {
+.character-info {
     width: 350px;
+
+    &__row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    &__cell {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 33%;
+
+        &-label {
+            font-size: 12px;
+            color: var(--text-color-secondary);
+        }
+
+        &-value {
+            font-size: 16px;
+            color: var(--text-color);
+            font-weight: 700;
+        }
+    }
 }

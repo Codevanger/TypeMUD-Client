@@ -1,3 +1,78 @@
 <p-dialog header="Персонаж" [(visible)]="showCharacterInfo" [resizable]="false">
-    
+  <div class="character-info">
+    <div class="character-info__row">
+      <div class="character-info__cell">
+        <div class="character-info__cell-label">Сила</div>
+        <div class="character-info__cell-value">
+          {{ (character$ | async)?.stats.str || '0' }}
+        </div>
+      </div>
+
+      <div class="character-info__cell">
+        <div class="character-info__cell-label">Ловкость</div>
+        <div class="character-info__cell-value">
+          {{ (character$ | async)?.stats.dex || '0' }}
+        </div>
+      </div>
+
+      <div class="character-info__cell">
+        <div class="character-info__cell-label">Живучесть</div>
+        <div class="character-info__cell-value">
+          {{ (character$ | async)?.stats.vit || '0' }}
+        </div>
+      </div>
+    </div>
+
+    <div class="character-info__row">
+      <div class="character-info__cell">
+        <div class="character-info__cell-label">Выносливость</div>
+        <div class="character-info__cell-value">
+          {{ (character$ | async)?.stats.end || '0' }}
+        </div>
+      </div>
+
+      <div class="character-info__cell">
+        <div class="character-info__cell-label">Интеллект</div>
+        <div class="character-info__cell-value">
+          {{ (character$ | async)?.stats.int || '0' }}
+        </div>
+      </div>
+
+      <div class="character-info__cell">
+        <div class="character-info__cell-label">Мудрость</div>
+        <div class="character-info__cell-value">
+          {{ (character$ | async)?.stats.wis || '0' }}
+        </div>
+      </div>
+    </div>
+
+    <p-divider></p-divider>
+
+    <div class="character-info__row">
+      <div class="character-info__cell">
+        <div class="character-info__cell-label">Макс. здоровье</div>
+        <div class="character-info__cell-value">
+          {{ (character$ | async)?.maxHealth || '0' }}
+        </div>
+      </div>
+
+      <div class="character-info__cell">
+        <div class="character-info__cell-label">Макс. мана</div>
+        <div class="character-info__cell-value">
+          {{ (character$ | async)?.maxMana || '0' }}
+        </div>
+      </div>
+
+      <div class="character-info__cell">
+        <div class="character-info__cell-label">Макс. стамина</div>
+        <div class="character-info__cell-value">
+          {{ (character$ | async)?.maxStamina || '0' }}
+        </div>
+      </div>
+    </div>
+
+    <div class="character-info__row">
+        
+    </div>
+  </div>
 </p-dialog>

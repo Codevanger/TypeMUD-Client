@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, filter, map, Observable } from 'rxjs';
+import { BehaviorSubject, debounce, debounceTime, distinctUntilChanged, filter, map, Observable } from 'rxjs';
 import { Character, CharacterView } from '../types/character';
 import { GameLocation, GameRoom } from '../types/locations';
 
@@ -58,9 +58,10 @@ export class StateService {
     this._character$.next(character);
   }
 
-  public get characterView$(): Observable<CharacterView> {
+  public getCharacterView$(): Observable<CharacterView> {
     return this._character$.pipe(
       filter((character) => !!character),
+      distinctUntilChanged(),
       map((character) => new CharacterView(character))
     );
   }

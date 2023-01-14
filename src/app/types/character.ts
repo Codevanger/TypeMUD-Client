@@ -33,15 +33,19 @@ export class CharacterView {
     this.mana = character.mana;
     this.money = character.money;
 
-    this._friends = character.friends;
+    this._stats = character.stats;
     this._skills = character.skills;
     this._inventory = character.inventory;
-    this._stats = character.stats;
+    this._friends = character.friends;
 
-    this.stats = JSON.parse(this._stats);
-    this.friends = JSON.parse(this._friends);
-    this.skills = JSON.parse(this._skills);
-    this.inventory = JSON.parse(this._inventory);
+    this.stats = character.stats ? JSON.parse(character.stats) : null;
+    this.skills = character.skills ? JSON.parse(character.skills) : null;
+    this.friends = character.friends ? JSON.parse(character.friends) : null;
+    this.inventory = character.inventory
+      ? JSON.parse(character.inventory)
+      : null;
+
+    console.log(this);
   }
 
   public characterId: number;
@@ -55,15 +59,15 @@ export class CharacterView {
   public mana: number;
   public money: number;
 
-  private _friends: string;
-  private _skills: string;
-  private _inventory: string;
-  private _stats: string;
-
   public stats: Stats;
-  public friends: number[];
+  public friends: Character[];
   public skills: number[];
   public inventory: number[];
+
+  public _stats: string;
+  public _friends: string;
+  public _skills: string;
+  public _inventory: string;
 
   public get maxHealth(): number {
     return Math.floor(
@@ -71,16 +75,40 @@ export class CharacterView {
     );
   }
 
+  public get healthRegen(): number {
+    return Math.floor(this.stats.vit * 2);
+  }
+
+  public get healthPercent(): number {
+    return +Number(this.health / this.maxHealth).toFixed(2);
+  }
+
   public get maxStamina(): number {
     return Math.floor(
-      100 + this.stats.end * 10 + Math.max(this.stats.end * 0.5)
+      100 + this.stats.end * 10 + Math.max(this.stats.vit * 0.5)
     );
+  }
+
+  public get staminaRegen(): number {
+    return Math.floor(this.stats.end * 2);
+  }
+
+  public get staminaPercent(): number {
+    return +Number(this.stamina / this.maxStamina).toFixed(2);
   }
 
   public get maxMana(): number {
     return Math.floor(
       100 + this.stats.int * 10 + Math.max(this.stats.wis * 0.5)
     );
+  }
+
+  public get manaRegen(): number {
+    return Math.floor(this.stats.int * 2);
+  }
+
+  public get manaPercent(): number {
+    return +Number(this.mana / this.maxMana).toFixed(2);
   }
 }
 
