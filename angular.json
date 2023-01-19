@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "bloodmrl-client": {
+    "typemud-client": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -112,27 +112,27 @@
         "serve": {
           "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
-            "browserTarget": "bloodmrl-client:build"
+            "browserTarget": "typemud-client:build"
           },
           "configurations": {
             "dev": {
-              "browserTarget": "bloodmrl-client:build:dev"
+              "browserTarget": "typemud-client:build:dev"
             },
             "production": {
-              "browserTarget": "bloodmrl-client:build:production"
+              "browserTarget": "typemud-client:build:production"
             },
             "web": {
-              "browserTarget": "bloodmrl-client:build:web"
+              "browserTarget": "typemud-client:build:web"
             },
             "web-production": {
-              "browserTarget": "bloodmrl-client:build:web-production"
+              "browserTarget": "typemud-client:build:web-production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "bloodmrl-client:build"
+            "browserTarget": "typemud-client:build"
           }
         },
         "test": {
@@ -160,7 +160,7 @@
         }
       }
     },
-    "bloodmrl-client-e2e": {
+    "typemud-client-e2e": {
       "root": "e2e",
       "projectType": "application",
       "architect": {

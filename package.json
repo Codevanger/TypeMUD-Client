@@ -1,7 +1,7 @@
 {
-  "name": "bloodmrl-client",
+  "name": "typemud-client",
   "version": "0.0.1",
-  "homepage": "https://github.com/codevanger/bloodmrl-client",
+  "homepage": "https://github.com/codevanger/typemud-client",
   "main": "app/main.js",
   "private": true,
   "target": "node",
