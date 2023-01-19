@@ -25,6 +25,7 @@ import { LoginComponent } from './components/login/login.component';
 import { GameComponent } from './components/game/game.component';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 import { CharacterInfoComponent } from './components/character-info/character-info.component';
+import { FriendsComponent } from './components/friends/friends.component';
 
 import { AuthService } from './services/auth.service';
 import { WebsocketService } from './services/websocket.service';
@@ -37,6 +38,7 @@ import { MorphService } from './services/morph.service';
 import { ConfirmationService } from 'primeng/api';
 import { FriendsService } from './services/friends.service';
 import { StatsService } from './services/stats.service';
+import { ExperienceService } from './services/experience.service';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,7 @@ import { StatsService } from './services/stats.service';
     GameComponent,
     ProgressBarComponent,
     CharacterInfoComponent,
+    FriendsComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,6 +82,7 @@ import { StatsService } from './services/stats.service';
     FriendsService,
     ConfirmationService,
     StatsService,
+    ExperienceService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,

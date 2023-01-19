@@ -55,6 +55,7 @@ export class GameComponent {
       label: 'Инвентарь',
       icon: 'pi pi-box',
       hotkey: 'Alt + I',
+      command: () => this.showInventory(),
     },
     {
       label: 'Чат',
@@ -66,11 +67,13 @@ export class GameComponent {
       label: 'Друзья',
       icon: 'pi pi-users',
       hotkey: 'Alt + F',
+      command: () => this.showFriends(),
     },
     {
       label: 'Умения',
       icon: 'pi pi-book',
       hotkey: 'Alt + B',
+      command: () => this.showSkills(),
     },
   ];
 
@@ -86,11 +89,24 @@ export class GameComponent {
     this.stateService.showCharacterInfo = !this.stateService.showCharacterInfo;
   }
 
+  public showFriends(): void {
+    this.stateService.showFriends = !this.stateService.showFriends;
+  }
+
+  public showInventory(): void {
+    this.stateService.showInventory = !this.stateService.showInventory;
+  }
+
+  public showSkills(): void {
+    this.stateService.showSkills = !this.stateService.showSkills;
+  }
+
   private listenToHotkeys(): void {
     const hotkeys = {
       M: () => this.showMap(),
       C: () => this.showChat(),
       P: () => this.showCharacterInfo(),
+      F: () => this.showFriends(),
     };
 
     window.addEventListener('keydown', (event) => {

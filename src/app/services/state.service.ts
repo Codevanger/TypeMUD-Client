@@ -21,6 +21,8 @@ export class StateService {
   private _showChat$ = new BehaviorSubject<boolean>(false);
   private _showInventory$ = new BehaviorSubject<boolean>(false);
   private _showCharacterInfo$ = new BehaviorSubject<boolean>(false);
+  private _showFriends$ = new BehaviorSubject<boolean>(false);
+  private _showSkills$ = new BehaviorSubject<boolean>(false);
 
   public get currentLocation$(): Observable<GameLocation> {
     return this._currentLocation$.asObservable();
@@ -148,5 +150,29 @@ export class StateService {
 
   public set showCharacterInfo(show: boolean) {
     this._showCharacterInfo$.next(show);
+  }
+
+  public get showFriends$(): Observable<boolean> {
+    return this._showFriends$.asObservable();
+  }
+
+  public get showFriends(): boolean {
+    return this._showFriends$.value;
+  }
+
+  public set showFriends(show: boolean) {
+    this._showFriends$.next(show);
+  }
+
+  public get showSkills$(): Observable<boolean> {
+    return this._showSkills$.asObservable();
+  }
+
+  public get showSkills(): boolean {
+    return this._showSkills$.value;
+  }
+
+  public set showSkills(show: boolean) {
+    this._showSkills$.next(show);
   }
 }

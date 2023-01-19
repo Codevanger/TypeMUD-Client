@@ -10,10 +10,10 @@ export class FriendsService {
   }
 
   public addFriend(name: string): void {
-    this.wsService.sendMessage(`/addfriend ${name}`);
+    this.wsService.sendMessage(`/friendadd ${name}`);
   }
 
   public removeFriend(name: string): void {
-    this.wsService.sendMessage(`/removefriend ${name}`);
+    this.wsService.sendMessage(`/friendremove ${name}`);
   }
 }
